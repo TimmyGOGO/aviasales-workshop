@@ -7,7 +7,10 @@ const formSearch = document.querySelector('.form-search'),
   dropdownCitiesTo = formSearch.querySelector('.dropdown__cities-to'),
   inputDateDepart = formSearch.querySelector('.input__date-depart');
 
+// бд городов:
 const city = ['Москва', 'Санкт-Петербург', 'Тверь', 'Минск'];
+
+// функции:
 const showCity = (input, list) => () => {
   list.textContent = '';
 
@@ -27,15 +30,31 @@ const showCity = (input, list) => () => {
   }
 };
 
+const selectCity = (input, list) => (event) => {
+  const target = event.target;
+  if (target.tagName.toLowerCase() === 'li') {
+    input.value = target.innerText;
+    list.textContent = '';
+  }
+};
+
+// обработчики событий:
 inputCitiesFrom.addEventListener(
   'input',
   showCity(inputCitiesFrom, dropdownCitiesFrom)
 );
 
-dropdownCitiesFrom.addEventListener('click', (event) => {
-  const target = event.target;
-  if (target.tagName.toLowerCase() === 'li') {
-    inputCitiesFrom.value = target.innerText;
-    dropdownCitiesFrom.textContent = '';
-  }
-});
+inputCitiesTo.addEventListener(
+  'input',
+  showCity(inputCitiesTo, dropdownCitiesTo)
+);
+
+dropdownCitiesFrom.addEventListener(
+  'click',
+  selectCity(inputCitiesFrom, dropdownCitiesFrom)
+);
+
+dropdownCitiesTo.addEventListener(
+  'click',
+  selectCity(inputCitiesTo, dropdownCitiesTo)
+);
