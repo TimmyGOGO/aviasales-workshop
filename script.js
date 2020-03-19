@@ -67,8 +67,25 @@ const renderCheapDay = (cheapTicket) => {
   console.log({ cheapTicket });
 };
 
+const compareTicketsInAscendingPriceOrder = (ticket1, ticket2) => {
+  if (ticket1.value < ticket2.value) {
+    return -1;
+  }
+
+  if (ticket1.value === ticket2.value) {
+    return 0;
+  }
+
+  if (ticket1.value > ticket2.value) {
+    return 1;
+  }
+};
+
 const renderCheapYear = (cheapTickets) => {
-  console.log({ cheapTickets });
+  const sortedCheapTickets = cheapTickets.sort(
+    compareTicketsInAscendingPriceOrder
+  );
+  console.log({ sortedCheapTickets });
 };
 
 const renderCheap = (data, date) => {
