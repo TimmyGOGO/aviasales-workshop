@@ -35,6 +35,20 @@ const getData = (url, callback) => {
   request.send();
 };
 
+const compareCitiesByAlphabet = (city1, city2) => {
+  if (city1.name < city2.name) {
+    return -1;
+  }
+
+  if (city1.name === city2.name) {
+    return 0;
+  }
+
+  if (city1.name > city2.name) {
+    return 1;
+  }
+};
+
 const showCity = (input, list) => () => {
   list.textContent = '';
   const inputValue = input.value.toLowerCase();
@@ -45,7 +59,9 @@ const showCity = (input, list) => () => {
       return fixItem.includes(inputValue) && fixItem.startsWith(inputValue);
     });
 
-    filterCity.forEach((item) => {
+    const sortedCitiesByAlphabet = filterCity.sort(compareCitiesByAlphabet);
+
+    sortedCitiesByAlphabet.forEach((item) => {
       const li = document.createElement('li');
       li.classList.add('dropdown__city');
       li.textContent = item.name;
@@ -67,19 +83,8 @@ const renderCheapDay = (cheapTicket) => {
   console.log({ cheapTicket });
 };
 
-const compareTicketsInAscendingPriceOrder = (ticket1, ticket2) => {
-  if (ticket1.value < ticket2.value) {
-    return -1;
-  }
-
-  if (ticket1.value === ticket2.value) {
-    return 0;
-  }
-
-  if (ticket1.value > ticket2.value) {
-    return 1;
-  }
-};
+const compareTicketsInAscendingPriceOrder = (ticket1, ticket2) =>
+  ticket1.value - ticket2.value;
 
 const renderCheapYear = (cheapTickets) => {
   const sortedCheapTickets = cheapTickets.sort(
